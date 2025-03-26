@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>消方塊遊戲</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; background-color: white; }
+        #gameContainer { display: grid; grid-template-columns: repeat(5, 80px); gap: 10px; justify-content: center; margin-top: 20px; }
+        .block { width: 80px; height: 80px; background-color: blue; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; cursor: pointer; }
+        #winMessage { display: none; font-size: 24px; color: red; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>點擊消除所有方塊</h1>
+    <div id="gameContainer"></div>
+    <div id="winMessage">你是臭貓！😼</div>
+    
+    <script>
+        const gameContainer = document.getElementById("gameContainer");
+        const winMessage = document.getElementById("winMessage");
+        let blocks = [];
+
+        function createBlocks() {
+            gameContainer.innerHTML = "";
+            blocks = [];
+            for (let i = 0; i < 15; i++) {
+                const block = document.createElement("div");
+                block.className = "block";
+                block.innerText = i + 1;
+                block.onclick = function() {
+                    block.remove();
+                    blocks = blocks.filter(b => b !== block);
+                    checkWin();
+                };
+                blocks.push(block);
+                gameContainer.appendChild(block);
+            }
+        }
+
+        function checkWin() {
+            if (blocks.length === 0) {
+                document.body.style.backgroundImage = "url('https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg')";
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundRepeat = "no-repeat";
+                document.body.style.backgroundPosition = "center";
+                winMessage.style.display = "block";
+                winMessage.style.color = "white";
+            }
+        }
+
+        createBlocks();
+    </script>
+</body>
+</html>
